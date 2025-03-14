@@ -1,6 +1,6 @@
-package Pages;
+package ru.pages;
 
-import locators.AllLocators;
+import ru.locators.AllLocators;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

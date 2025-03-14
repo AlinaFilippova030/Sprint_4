@@ -1,4 +1,4 @@
-package locators;
+package ru.locators;
 
 import org.openqa.selenium.By;
 

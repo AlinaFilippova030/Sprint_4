@@ -1,29 +1,25 @@
-package HomePageTest;
+package ru.home.page.test;
 
-import Pages.HomePage;
+import ru.pages.HomePage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.hamcrest.CoreMatchers.is;
-import org.hamcrest.MatcherAssert;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 
-public class FqaSectionTest {
+public class HomePageLoadTest {
     private WebDriver driver;
 
     @Before
-    public void setUp() {
-//               CHROME DRIVER
+    public void setup() {
+//              CHROME DRIVER
         String driverPath = "chromedriver";
         System.setProperty("webdriver.chrome.driver", driverPath);
         driver = new ChromeDriver();
     }
-////              FIREFOX DRIVER
+
+//  //            FIREFOX DRIVER
 //        // Укажите путь к geckodriver, если он не в PATH
 //        System.setProperty("webdriver.gecko.driver", "geckodriver");
 //
@@ -39,17 +35,10 @@ public class FqaSectionTest {
 //
 //}
 
-
     @Test
-    public void CheckTextInAccardeon() {
+    public void CheckMainPageText() {
         HomePage objHomePage = new HomePage(driver);
         objHomePage.isHomePageLoaded();
-
-        objHomePage.scrollToSubHeader();
-        objHomePage.clickAccordionItemButton();
-        String actualTextInAccordion = objHomePage.textInAccardeon();
-        String expectedTextInAccordion = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
-        MatcherAssert.assertThat(actualTextInAccordion, is(expectedTextInAccordion));
     }
 
     @After

@@ -1,8 +1,8 @@
-package HeaderOderButtonTest;
+package ru.middle.order.button.test;
 
-import Pages.AboutRentOrderPage;
-import Pages.HomePage;
-import Pages.PersonDetaislOrderPage;
+import ru.pages.AboutRentOrderPage;
+import ru.pages.HomePage;
+import ru.pages.PersonDetaislOrderPage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,13 +10,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-import org.openqa.selenium.firefox.FirefoxProfile;
 
 
 @RunWith(Parameterized.class)
-public class HeaderOderButtonTest {
+public class MiddleOrderButtonTest {
     private WebDriver driver;
 
     // Параметры
@@ -31,7 +28,7 @@ public class HeaderOderButtonTest {
     private String commentInput;
 
     // Конструктор для параметров
-    public HeaderOderButtonTest(String nameInput, String surnameInput, String adressInput, String metroStation,
+    public MiddleOrderButtonTest(String nameInput, String surnameInput, String adressInput, String metroStation,
                                  String phoneInput, String pickDate, String pickTime, String blackColorCheckBox, String commentInput) {
         this.nameInput = nameInput;
         this.surnameInput = surnameInput;
@@ -54,14 +51,13 @@ public class HeaderOderButtonTest {
 
     @Before
     public void setUp() {
-
- //       CHROME DRIVER
+//              CHROME DRIVER
         String driverPath = "chromedriver";
         System.setProperty("webdriver.chrome.driver", driverPath);
         driver = new ChromeDriver();
     }
 
-////          FIREFOX DRIVER
+////              FIREFOX DRIVER
 //        // Укажите путь к geckodriver, если он не в PATH
 //        System.setProperty("webdriver.gecko.driver", "geckodriver");
 //
@@ -75,24 +71,20 @@ public class HeaderOderButtonTest {
 //        // Инициализация FirefoxDriver
 //        driver = new FirefoxDriver(options);
 //
-//    }
+//}
 
     @Test
-    public void FillOrderDetailsPageHeader() {
+    public void FillOrderDetailsPageMiddle() {
         HomePage objHomePage = new HomePage(driver);
         objHomePage.isHomePageLoaded();
         PersonDetaislOrderPage objPersonDetaislOrderPage = new PersonDetaislOrderPage(driver);
 
-        objHomePage.clickOrderButtonHeader();
+        objHomePage.scrollToMiddleOrderButton();
+        objHomePage.clickOrderButtonMiddle();
         objPersonDetaislOrderPage.isPersonDetaislPageLoaded();
 
-        // переменная со значением, для поля ИМЯ
-//        String nameInput = "Иван";
-        // в одном шаге проверь, что поле «Занятие» доступно для редактирования, и введи в него новое значение
         objPersonDetaislOrderPage.emptyNameInput(nameInput);
-//        String surnameInput = "Крузенштерн";
         objPersonDetaislOrderPage.emptySurnameInput(surnameInput);
-//        String adressInput = "Семеновская роща 15";
         objPersonDetaislOrderPage.emptyAdressInput(adressInput);
 
 //        objPersonDetaislOrderPage.clickMetroSelector();
@@ -107,12 +99,8 @@ public class HeaderOderButtonTest {
         }
 
 
-        // проверь, что поле «Станция метро» поменяло значение на новое
-//        String newMetroStation = "Красносельская";
- //       objPersonDetaislOrderPage.waitForChangMetroStation(newMetroStation);
 
-        // проверь, что поле «Телефон»  поменяло значение на новое
- //       String phoneInput = "+79213458909";
+//        objPersonDetaislOrderPage.waitForChangMetroStation(metroStation);
         objPersonDetaislOrderPage.emptyPhoneInput(phoneInput);
 
         objPersonDetaislOrderPage.clickNextButton();
@@ -120,7 +108,6 @@ public class HeaderOderButtonTest {
         AboutRentOrderPage objAboutRentOrderPage = new AboutRentOrderPage(driver);
         objAboutRentOrderPage.isAboutRentOrderPageLoad();
 
-        // Проверка текста заголовка
         String expectedHeaderText = "Про аренду";
         String actualHeaderText = objAboutRentOrderPage.getHeaderText();
         if (actualHeaderText.equals(expectedHeaderText)) {
@@ -129,20 +116,12 @@ public class HeaderOderButtonTest {
             System.out.println("Текст заголовка некорректен. Ожидалось: " + expectedHeaderText + ", но найдено: " + actualHeaderText);
         }
 
-
-//        objAboutRentOrderPage.clickRentDateInput();
-//        objAboutRentOrderPage.clickPickDate();
         objAboutRentOrderPage.clickRentDateInput();
         if (pickDate.equals("17")) {
             objAboutRentOrderPage.clickPickDate();
         } else if (pickDate.equals("18")) {
             objAboutRentOrderPage.clickPickDate2();
         }
-
-//        objAboutRentOrderPage.clickRentTimeInput();
-//        //       String dateInput = "13.03.2025";
-//        //       objAboutRentOrderPage.emptyRentDateInput(dateInput);
-//        objAboutRentOrderPage.clickPickTime();
 
         objAboutRentOrderPage.clickRentTimeInput();
         if (pickTime.equals("сутки")) {
@@ -151,7 +130,6 @@ public class HeaderOderButtonTest {
             objAboutRentOrderPage.clickPickTime2();
         }
 
-//        objAboutRentOrderPage.clickBlackColorCheckBox();
         if (blackColorCheckBox.equals("чёрный жемчуг")) {
             objAboutRentOrderPage.clickBlackColorCheckBox();
         } else if (blackColorCheckBox.equals("серая безысходность")) {
@@ -170,14 +148,12 @@ public class HeaderOderButtonTest {
             System.out.println("серая безысходность' не выбран.");
         }
 
- //       String commentInput = "Подъезд со двора";
         objAboutRentOrderPage.emptyCommentInput(commentInput);
 
         objAboutRentOrderPage.clickOrderButton();
 
         objAboutRentOrderPage.isOrderConfirmationHeader();
         objAboutRentOrderPage.clickConfirmOrderButton();
-
 
         objAboutRentOrderPage.getConfirmationMessageHeaderText();
 
@@ -190,11 +166,18 @@ public class HeaderOderButtonTest {
             System.out.println("Текст заголовка некорректен. Ожидалось: " + expectedConfirmationMessageHeaderText + ", но найдено: " + actualConfirmationMessageHeaderText);
         }
 
+        objAboutRentOrderPage.checkStatusButtonText();
+        String expectedButtonText = "Посмотреть статус";
+        String actualButtonText = objAboutRentOrderPage.checkStatusButtonText();
+        if (actualButtonText.equals(expectedButtonText)) {
+            System.out.println("Текст кнопки корректен: " + actualButtonText);
+        } else {
+            System.out.println("Текст кнопки некорректен. Ожидалось: " + expectedButtonText + ", но найдено: " + actualButtonText);
+        }
+
         objAboutRentOrderPage.clickCheckStatusButton();
 
     }
-
-
 
     @After
     public void tearDown() {
