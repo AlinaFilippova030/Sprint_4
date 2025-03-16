@@ -5,48 +5,41 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import ru.config.Config;
 
 import static org.hamcrest.CoreMatchers.is;
 import org.hamcrest.MatcherAssert;
+import ru.texts.Texts;
+import ru.utils.WebDriverFactory;
 
 public class FqaSectionTest {
     private WebDriver driver;
 
+
+
     @Before
     public void setUp() {
-//               CHROME DRIVER
-        String driverPath = "chromedriver";
-        System.setProperty("webdriver.chrome.driver", driverPath);
-        driver = new ChromeDriver();
+        String browser = Config.getBrowser(); // Получаем значение из файла config.properties
+        driver = WebDriverFactory.createDriver(browser); // Создаем драйвер через фабрику
+        driver.manage().window().maximize();
     }
-////              FIREFOX DRIVER
-//        // Укажите путь к geckodriver, если он не в PATH
-//        System.setProperty("webdriver.gecko.driver", "geckodriver");
-//
-//        // Настройка Firefox (опционально)
-//        FirefoxProfile profile = new FirefoxProfile();
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.setBinary("/Applications/Firefox.app/Contents/MacOS/firefox"); // Путь к Firefox на macOS
-//        profile.setPreference("javascript.enabled", true); // Включить JavaScript
-//        options.setProfile(profile);
-//
-//        // Инициализация FirefoxDriver
-//        driver = new FirefoxDriver(options);
-//
-//}
 
 
     @Test
-    public void CheckTextInAccardeon() {
+    public void CheckTextInAccardeonTest() {
         HomePage objHomePage = new HomePage(driver);
         objHomePage.isHomePageLoaded();
 
         objHomePage.scrollToSubHeader();
         objHomePage.clickAccordionItemButton();
         String actualTextInAccordion = objHomePage.textInAccardeon();
-        String expectedTextInAccordion = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
-        MatcherAssert.assertThat(actualTextInAccordion, is(expectedTextInAccordion));
+        MatcherAssert.assertThat(actualTextInAccordion, is(Texts.ACCORDION_ITEM_PANEL_TEXT));
+        if (actualTextInAccordion.equals(Texts.ACCORDION_ITEM_PANEL_TEXT)) {
+            System.out.println("PASSED: Текст заголовка корректен: " + actualTextInAccordion);
+        } else {
+            System.out.println("FAILED: Текст заголовка некорректен. Ожидалось: " + Texts.ACCORDION_ITEM_PANEL_TEXT + ", но найдено: " + actualTextInAccordion);
+        }
+
     }
 
     @After

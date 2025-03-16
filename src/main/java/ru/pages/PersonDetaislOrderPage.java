@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.By;
+import ru.texts.Texts;
+
 import static org.junit.Assert.assertTrue;
 
 public class PersonDetaislOrderPage {
@@ -13,37 +15,47 @@ public class PersonDetaislOrderPage {
     private By OrderButtonHeader = AllLocators.ORDER_BUTTON_HEADER;
     private By personDetaislPageHeader = AllLocators.ORDER_PAGE_HEADER;
     private By nameInput = AllLocators.NAME_INPUT;
+    private By clientNameValue = AllLocators.CLIENT_NAME;
     private By surnameInput = AllLocators.SURNAME_INPUT;
+    private By clientSurnameValue = AllLocators.CLIENT_SURNAME;
     private By adressInput = AllLocators.ADRESS_INPUT;
+    private By clientAdressValue = AllLocators.CLIENT_ADRESS_VALUE;
     private By metroSelector = AllLocators.METRO_SELECTOR;
     private By metroSelectorFilled = AllLocators.METRO_SELECTOR_FILLED;
     private By metroStationList = AllLocators.METRO_LIST;
     private By metroStation = AllLocators.STATION_KRASNOSELSKAYA;
     private By metroStation2 = AllLocators.STATION_LYBIANKA;
+    private By clientMetroValue = AllLocators.METRO_STATION_VALUE;
     private By phoneInput = AllLocators.PHONE_INPUT;
+    private By clientPhoneValue = AllLocators.CLIENT_PHONE_VALUE;
     private By nextButton = AllLocators.NEXT_BUTTON;
 
-    String personDetaislPageHeaderText = "Имя";
 
     public PersonDetaislOrderPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void clickOrderButtonHeader() {
-        driver.findElement(OrderButtonHeader).click();
+    public boolean isPersonDetaislPageLoaded() {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(personDetaislPageHeader));
+        String actualHeaderText = driver.findElement(personDetaislPageHeader).getText();
+        return actualHeaderText.equals(personDetaislPageHeader);
     }
 
-    public boolean isPersonDetaislPageLoaded() {
-    WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(personDetaislPageHeader));
-    String actualHeaderText = driver.findElement(personDetaislPageHeader).getText();
-        return actualHeaderText.equals(personDetaislPageHeader);
-}
+    public String textInPersonDetailsPageHeader() {
+        return driver.findElement(personDetaislPageHeader).getText();
+    }
+
     // метод для проверки открытости поля «ИМЯ», удаления текста из неё и ввода нового значения из параметра
     public void emptyNameInput(String inputNameEmpty) {
         assertTrue(driver.findElement(nameInput).isEnabled());
         driver.findElement(nameInput).clear();
         driver.findElement(nameInput).sendKeys(inputNameEmpty);
+    }
+
+    // метод получения Имя Клиента
+    public String getPersonNameValue() {
+        return driver.findElement(clientNameValue).getAttribute("value");
     }
 
     // метод для проверки открытости поля «Фамилия», удаления текста из неё и ввода нового значения из параметра
@@ -53,6 +65,10 @@ public class PersonDetaislOrderPage {
         driver.findElement(surnameInput).sendKeys(inputSurnameEmpty);
     }
 
+    public String getPersonSurnameValue() {
+        return driver.findElement(clientSurnameValue).getAttribute("value");
+    }
+
     // метод для проверки открытости поля «Адресс», удаления текста из неё и ввода нового значения из параметра
     public void emptyAdressInput(String inputAdressEmpty) {
         assertTrue(driver.findElement(adressInput).isEnabled());
@@ -60,9 +76,12 @@ public class PersonDetaislOrderPage {
         driver.findElement(adressInput).sendKeys(inputAdressEmpty);
     }
 
+    public String getClientAdressValue() {
+        return driver.findElement(clientAdressValue).getAttribute("value");
+    }
+
     // метод для нажатия на селектор Стация Метро
     public void clickMetroSelector() {
-
         driver.findElement(metroSelector).click();
     }
 
@@ -77,15 +96,17 @@ public class PersonDetaislOrderPage {
         driver.findElement(metroStation).click();
     }
 
+    public String getMetroStationValue() {
+        return driver.findElement(clientMetroValue).getAttribute("value");
+    }
+
     // метод для нажатия на станцию "Лубянка"
     public void clickMetroStation2() {
         driver.findElement(metroStation2).click();
     }
 
-
-
+    // дождаться, чтобы текст в элементе «Селектор Метро» стал равен значению из параметра
     public void waitForChangMetroStation(String newMetroStation) {
-        // дождаться, чтобы текст в элементе «Селектор Метро» стал равен значению из параметра
         new WebDriverWait(driver, 3).until(
                 ExpectedConditions.textToBePresentInElementValue(metroSelectorFilled, newMetroStation)
         );
@@ -97,6 +118,11 @@ public class PersonDetaislOrderPage {
         driver.findElement(phoneInput).clear();
         driver.findElement(phoneInput).sendKeys(InputPhoniEmpty);
     }
+
+    public String getPhoneNumberValue() {
+        return driver.findElement(clientPhoneValue).getAttribute("value");
+    }
+
 
     // метод для нажатия на кнопку Далее
     public void clickNextButton() {

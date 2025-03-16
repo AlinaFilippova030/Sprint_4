@@ -1,6 +1,7 @@
 package ru.pages;
 
 import ru.locators.AllLocators;
+import ru.texts.Texts;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,7 +19,6 @@ public class HomePage {
     private By OrderButtonHeader = AllLocators.ORDER_BUTTON_HEADER;
     private By OrderButtonMiddle = AllLocators.ORDER_BUTTON_MIDDLE;
 
-    String headerText = "Самокат на пару дней Привезём его прямо к вашей двери, а когда накатаетесь — заберём";
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -29,8 +29,13 @@ public class HomePage {
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(homeHeader));
         String actualHeaderText = driver.findElement(homeHeader).getText();
-        return actualHeaderText.equals(headerText);
+        return actualHeaderText.equals(Texts.MAIN_PAGE_HEADER_TEXT);
     }
+
+    public String textInMainHeader() {
+        return driver.findElement(homeHeader).getText().replace("\n", " ").trim();
+    }
+
 
     public void scrollToSubHeader() {
         WebElement element = driver.findElement(accordionItemButton);
@@ -42,10 +47,6 @@ public class HomePage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 
-
-    public String textInFaqHeader() {
-        return driver.findElement(fqaHeader).getText();
-    }
 
     public void clickAccordionItemButton() {
         driver.findElement(accordionItemButton).click();

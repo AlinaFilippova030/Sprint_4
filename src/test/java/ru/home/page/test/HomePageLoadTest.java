@@ -1,44 +1,42 @@
 package ru.home.page.test;
 
+import ru.config.Config;
+import ru.texts.Texts;
+import org.hamcrest.MatcherAssert;
 import ru.pages.HomePage;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import ru.utils.WebDriverFactory;
+
+import static org.hamcrest.CoreMatchers.is;
 
 
 public class HomePageLoadTest {
     private WebDriver driver;
 
+
     @Before
-    public void setup() {
-//              CHROME DRIVER
-        String driverPath = "chromedriver";
-        System.setProperty("webdriver.chrome.driver", driverPath);
-        driver = new ChromeDriver();
+    public void setUp() {
+        String browser = Config.getBrowser(); // Получаем значение из файла config.properties
+        driver = WebDriverFactory.createDriver(browser); // Создаем драйвер через фабрику
+        driver.manage().window().maximize();
     }
 
-//  //            FIREFOX DRIVER
-//        // Укажите путь к geckodriver, если он не в PATH
-//        System.setProperty("webdriver.gecko.driver", "geckodriver");
-//
-//        // Настройка Firefox (опционально)
-//        FirefoxProfile profile = new FirefoxProfile();
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.setBinary("/Applications/Firefox.app/Contents/MacOS/firefox"); // Путь к Firefox на macOS
-//        profile.setPreference("javascript.enabled", true); // Включить JavaScript
-//        options.setProfile(profile);
-//
-//        // Инициализация FirefoxDriver
-//        driver = new FirefoxDriver(options);
-//
-//}
-
     @Test
-    public void CheckMainPageText() {
+    public void CheckMainPageTextTest() {
         HomePage objHomePage = new HomePage(driver);
         objHomePage.isHomePageLoaded();
+
+        String actualHeaderText = objHomePage.textInMainHeader();
+        MatcherAssert.assertThat(actualHeaderText, is(Texts.MAIN_PAGE_HEADER_TEXT));
+        if (actualHeaderText.equals(Texts.MAIN_PAGE_HEADER_TEXT)) {
+            System.out.println("PASSED: Текст заголовка корректен: " + actualHeaderText);
+        } else {
+            System.out.println("FAILED: Текст заголовка некорректен. Ожидалось: " + Texts.MAIN_PAGE_HEADER_TEXT + ", но найдено: " + actualHeaderText);
+        }
+
     }
 
     @After
