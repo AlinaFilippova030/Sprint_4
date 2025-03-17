@@ -51,8 +51,8 @@ public class HeaderOderButtonTest {
     @Parameterized.Parameters
     public static Object[] [] getTestData() {
         return new Object[] []{
-                {"Джон", "Хокинс", "Бользаковский пруд", "Красносельская", "+79114900988", "17.03.2025", "сутки", "чёрный жемчуг", "Дрова со двора"},
-                {"Иван", "Крузенштерн", "Семеновская роща 15", "Лубянка", "+79213458909", "18.03.2025", "трое суток", "серая безысходность", "Подъезд со двора"}
+                {"Джон", "Хокинс", "Бользаковский пруд", "Красносельская", "+79114900988", "20.03.2025", "сутки", "чёрный жемчуг", "Дрова со двора"},
+                {"Иван", "Крузенштерн", "Семеновская роща 15", "Лубянка", "+79213458909", "21.03.2025", "трое суток", "серая безысходность", "Подъезд со двора"}
         };
     }
 
@@ -189,9 +189,9 @@ public class HeaderOderButtonTest {
 
 //        Когда привезти самокат
         objAboutRentOrderPage.clickRentDateInput();
-        if (pickDate.equals(Texts.MARCH17)) {
+        if (pickDate.equals(Texts.MARCH20)) {
             objAboutRentOrderPage.clickPickDate();
-        } else if (pickDate.equals(Texts.MARCH18)) {
+        } else if (pickDate.equals(Texts.MARCH21)) {
             objAboutRentOrderPage.clickPickDate2();
         }
 

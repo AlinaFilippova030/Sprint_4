@@ -51,8 +51,8 @@ public class MiddleOrderButtonTest {
     @Parameterized.Parameters
     public static Object[] [] getTestData() {
         return new Object[] []{
-                {"Джон", "Хокинс", "Бользаковский пруд", "Красносельская", "+79114900988", "17.03.2025", "сутки", "чёрный жемчуг", "Дрова со двора"},
-                {"Иван", "Крузенштерн", "Семеновская роща 15", "Лубянка", "+79213458909", "18.03.2025", "трое суток", "серая безысходность", "Подъезд со двора"}
+                {"Джон", "Хокинс", "Бользаковский пруд", "Красносельская", "+79114900988", "20.03.2025", "сутки", "чёрный жемчуг", "Дрова со двора"},
+                {"Иван", "Крузенштерн", "Семеновская роща 15", "Лубянка", "+79213458909", "21.03.2025", "трое суток", "серая безысходность", "Подъезд со двора"}
         };
     }
 
@@ -142,9 +142,9 @@ public class MiddleOrderButtonTest {
 //        Станция Метро
         objPersonDetaislOrderPage.clickMetroSelector();
         objPersonDetaislOrderPage.MetroListLoad();
-        if (metroStation.equals("Красносельская")) {
+        if (metroStation.equals(Texts.METRO_KRASNOSELSKAYA)) {
             objPersonDetaislOrderPage.clickMetroStation();
-        } else if (metroStation.equals("Лубянка")) {
+        } else if (metroStation.equals(Texts.METRO_LYBIANKA)) {
             objPersonDetaislOrderPage.clickMetroStation2();
         }
 
@@ -158,12 +158,6 @@ public class MiddleOrderButtonTest {
             System.out.println("FAILED: Станция метро некорректена. Ожидалось: " + metroStation + ", но найдено: " + actualClientMetroValue);
         }
 
-        objPersonDetaislOrderPage.clickMetroSelector();
-        if (metroStation.equals("Красносельская")) {
-            objPersonDetaislOrderPage.clickMetroStation();
-        } else if (metroStation.equals("Лубянка")) {
-            objPersonDetaislOrderPage.clickMetroStation2();
-        }
 
 
 //       Телефон
@@ -199,9 +193,9 @@ public class MiddleOrderButtonTest {
 
 //        Когда привезти самокат
         objAboutRentOrderPage.clickRentDateInput();
-        if (pickDate.equals("17.03.2025")) {
+        if (pickDate.equals(Texts.MARCH20)) {
             objAboutRentOrderPage.clickPickDate();
-        } else if (pickDate.equals("18.03.2025")) {
+        } else if (pickDate.equals(Texts.MARCH21)) {
             objAboutRentOrderPage.clickPickDate2();
         }
 
@@ -218,9 +212,9 @@ public class MiddleOrderButtonTest {
 
         //        срок аренды
         objAboutRentOrderPage.clickRentTimeInput();
-        if (pickTime.equals("сутки")) {
+        if (pickTime.equals(Texts.ONE_DAY)) {
             objAboutRentOrderPage.clickPickTime();
-        } else if (pickTime.equals("трое суток")) {
+        } else if (pickTime.equals(Texts.THREE_DAYS_GRACE)) {
             objAboutRentOrderPage.clickPickTime2();
         }
 
@@ -237,23 +231,23 @@ public class MiddleOrderButtonTest {
 
         //        цвет самоката
         // Выбор чекбокса в зависимости от входного параметра
-        if (colorCheckBox.equals("чёрный жемчуг")) {
+        if (colorCheckBox.equals(Texts.BLACK)) {
             objAboutRentOrderPage.clickBlackColorCheckBox();
-        } else if (colorCheckBox.equals("серая безысходность")) {
+        } else if (colorCheckBox.equals(Texts.GREY)) {
             objAboutRentOrderPage.clickGreyColorCheckBox();
         }
 
         // Проверка состояния чекбоксов
         if (objAboutRentOrderPage.isBlackColorCheckBoxSelected()) {
-            System.out.println("Чекбокс 'чёрный жемчуг' выбран.");
+            System.out.println("Чекбокс " + Texts.BLACK + " выбран.");
         } else {
-            System.out.println("Чекбокс 'чёрный жемчуг' не выбран.");
+            System.out.println("Чекбокс " + Texts.BLACK + " не выбран.");
         }
 
         if (objAboutRentOrderPage.isGreyColorCheckBoxSelected()) {
-            System.out.println("Чекбокс 'серая безысходность' выбран.");
+            System.out.println("Чекбокс " + Texts.GREY + " выбран.");
         } else {
-            System.out.println("Чекбокс 'серая безысходность' не выбран.");
+            System.out.println("Чекбокс " + Texts.GREY + " не выбран.");
         }
 
         // Получение фактического текста цвета

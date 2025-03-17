@@ -8,8 +8,8 @@ public class Texts {
     public static final String ORDER_CLIENT_PAGE_HEADER_TEXT = "Для кого самокат";
     public static final String METRO_KRASNOSELSKAYA = "Красносельская";
     public static final String METRO_LYBIANKA = "Лубянка";
-    public static final String MARCH17 = "17.03.2025";
-    public static final String MARCH18 = "18.03.2025";
+    public static final String MARCH20 = "20.03.2025";
+    public static final String MARCH21 = "21.03.2025";
     public static final String ABOUT_RENT_PAGE_HEADER_TEXT = "Про аренду";
     public static final String ONE_DAY = "сутки";
     public static final String THREE_DAYS_GRACE = "трое суток";

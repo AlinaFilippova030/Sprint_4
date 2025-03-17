@@ -36,9 +36,9 @@ public class FqaSectionTest {
         String actualTextInAccordion = objHomePage.textInAccardeon();
         MatcherAssert.assertThat(actualTextInAccordion, is(Texts.ACCORDION_ITEM_PANEL_TEXT));
         if (actualTextInAccordion.equals(Texts.ACCORDION_ITEM_PANEL_TEXT)) {
-            System.out.println("PASSED: Текст заголовка корректен: " + actualTextInAccordion);
+            System.out.println("PASSED: Текст в выпадаюшем списке корректен: " + actualTextInAccordion);
         } else {
-            System.out.println("FAILED: Текст заголовка некорректен. Ожидалось: " + Texts.ACCORDION_ITEM_PANEL_TEXT + ", но найдено: " + actualTextInAccordion);
+            System.out.println("FAILED: Текст в выпадаюшем списке не корректен. Ожидалось: " + Texts.ACCORDION_ITEM_PANEL_TEXT + ", но найдено: " + actualTextInAccordion);
         }
 
     }

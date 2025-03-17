@@ -16,8 +16,8 @@ public class AboutRentOrderPage {
     private By aboutRentPageHeader = By.xpath(".//div[@class='Order_Content__bmtHS']/div[@class='Order_Header__BZXOb' and text()='Про аренду']");
     private By rentDateValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Когда привезти самокат']");
     private By rentTimeInput = By.xpath(".//div[@class='Dropdown-placeholder' and text()='* Срок аренды']");
-    private By pickDateMarch17 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '17') and contains(@aria-label, 'марта 2025')]");
-    private By pickDateMarch18 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '18') and contains(@aria-label, 'марта 2025')]");
+    private By pickDateMarch17 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '20') and contains(@aria-label, 'марта 2025')]");
+    private By pickDateMarch18 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '21') and contains(@aria-label, 'марта 2025')]");
     private By pickTimeOneDay = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'сутки')]");
     private By pickTimeThreeDays = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'трое суток')]");
     private By PickTimeValue = By.xpath(".//div[contains(@class, 'Dropdown-placeholder') and contains(@class, 'is-selected')]");
