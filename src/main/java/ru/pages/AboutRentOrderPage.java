@@ -13,34 +13,30 @@ import static org.junit.Assert.assertTrue;
 public class AboutRentOrderPage {
     private WebDriver driver;
 
-    private By aboutRentPageHeader = AllLocators.RENT_PAGE_HEADER;
-    private By rentDateInput = AllLocators.RENT_DATE_INPUT;
-    private By rentTimeInput = AllLocators.RENT_TIME_INPUT;
-    private By rentDateValue = AllLocators.RENT_DATE_VALUE;
-    private By pickDate = AllLocators.RENT_DATE_SELECTOR;
-    private By pickDate2 = AllLocators.RENT_DATE_SELECTOR2;
-    private By pickTime = AllLocators.RENT_TIME;
-    private By pickTime2 = AllLocators.RENT_TIME2;
-    private By PickTimeValue = AllLocators.RENT_TIME_VALUE;
-    private By blackColorCheckBox = AllLocators.CHECK_BOX_COLOR_BLACK_CHECKED;
-    private By greyColorCheckBox = AllLocators.CHECK_BOX_COLOR_GREY_CHECKED;
-    private By colorValue = AllLocators.COLOR_VALUE;
+    private By aboutRentPageHeader = By.xpath(".//div[@class='Order_Content__bmtHS']/div[@class='Order_Header__BZXOb' and text()='Про аренду']");
+    private By rentDateValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Когда привезти самокат']");
+    private By rentTimeInput = By.xpath(".//div[@class='Dropdown-placeholder' and text()='* Срок аренды']");
+    private By pickDateMarch17 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '17') and contains(@aria-label, 'марта 2025')]");
+    private By pickDateMarch18 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '18') and contains(@aria-label, 'марта 2025')]");
+    private By pickTimeOneDay = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'сутки')]");
+    private By pickTimeThreeDays = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'трое суток')]");
+    private By PickTimeValue = By.xpath(".//div[contains(@class, 'Dropdown-placeholder') and contains(@class, 'is-selected')]");
 
-    private By blackCheckBoxText = AllLocators.CHECK_BOX_COLOR_BLACK_TEXT;
-    private By greyCheckBoxText = AllLocators.CHECK_BOX_COLOR_GREY_TEXT;
+    private By blackColorCheckBox = By.xpath(".//input[@id='black']");
+    private By greyColorCheckBox = By.xpath(".//input[@id='grey']");
+    private By colorValue = By.xpath(".//label[@for='black' or @for='grey']");
+    private By blackCheckBoxText = By.xpath(".//label[@for='black']");
+    private By greyCheckBoxText = By.xpath(".//label[@for='grey']");
 
+    private By commentValue = By.xpath(".//div[@class='Input_InputContainer__3NykH']//input[@placeholder='Комментарий для курьера']");
 
-    private By commentInput = AllLocators.COMMENT_INPUT;
-    private By commentValue = AllLocators.COMMENT_VALUE;
-    private By orderButton = AllLocators.ORDER_BUTTON;
+    private By orderButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
+    private By orderConfirmationHeader = By.xpath(".//div[@class='Order_ModalHeader__3FDaJ' and contains(text(), 'Хотите оформить заказ?')]");
+    private By confirmOrderButton = By.xpath(".//div[@class='Order_Buttons__1xGrp']/button[text()='Да']");
 
-    private By orderConfirmationHeader = AllLocators.ORDER_CONFIRMATION_HEADER;
-    private By confirmOrderButton = AllLocators.ORDER_CONFIRMATION_BUTTON;
-    private By confirmationMessageHeader = AllLocators.ORDER_CONFIRMATION_TEXT;
-
-    private By orderPlacedHeaderText =AllLocators.ORDER_PLACED_HEADER_TEXT;
-    private By checkStatusButton = AllLocators.CHECK_SATSTUS_BUTTON;
-    private By cancelOrderButton = AllLocators.CANCEL_ORDER_BUTTON;
+    private By orderPlacedHeaderText = By.xpath(".//div[contains(@class, 'Order_ModalHeader__3FDaJ') and contains(text(), 'Заказ оформлен')]");
+    private By checkStatusButton = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Посмотреть статус']");
+    private By cancelOrderButton = By.xpath(".//button[contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_Middle__1CSJM') and contains(@class, 'Button_Inverted__3IF-i') and text()='Отменить заказ']");
 
 
 
@@ -64,17 +60,17 @@ public class AboutRentOrderPage {
 
     // метод для нажатия на поле Дата
     public void clickRentDateInput() {
-        driver.findElement(rentDateInput).click();
+        driver.findElement(rentDateValue).click();
     }
 
     // метод для нажатия на дату1 заказа
     public void clickPickDate() {
-        driver.findElement(pickDate).click();
+        driver.findElement(pickDateMarch17).click();
     }
 
     // метод для нажатия на дату2 заказа
     public void clickPickDate2() {
-        driver.findElement(pickDate2).click();
+        driver.findElement(pickDateMarch18).click();
     }
 
     // Метод получения даты аренды Значение
@@ -89,7 +85,7 @@ public class AboutRentOrderPage {
 
     // метод для нажатия на поле срок в выпадающем списке
     public void clickPickTime() {
-        driver.findElement(pickTime).click();
+        driver.findElement(pickTimeOneDay).click();
     }
 
     // метод получения срок аренды Значения
@@ -99,7 +95,7 @@ public class AboutRentOrderPage {
 
     // метод для нажатия на поле срок в выпадающем списке2
     public void clickPickTime2() {
-        driver.findElement(pickTime2).click();
+        driver.findElement(pickTimeThreeDays).click();
     }
 
 
@@ -136,9 +132,9 @@ public class AboutRentOrderPage {
 
     // метод для проверки открытости поля «Комментарий для курьера», удаления текста из неё и ввода нового значения из параметра
     public void emptyCommentInput(String inputCommentEmpty) {
-        assertTrue(driver.findElement(commentInput).isEnabled());
-        driver.findElement(commentInput).clear();
-        driver.findElement(commentInput).sendKeys(inputCommentEmpty);
+        assertTrue(driver.findElement(commentValue).isEnabled());
+        driver.findElement(commentValue).clear();
+        driver.findElement(commentValue).sendKeys(inputCommentEmpty);
     }
 
     // Метод получения Комментария Значение

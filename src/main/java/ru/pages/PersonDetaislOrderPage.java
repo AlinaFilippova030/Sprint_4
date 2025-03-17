@@ -12,23 +12,17 @@ import static org.junit.Assert.assertTrue;
 public class PersonDetaislOrderPage {
     private WebDriver driver;
 
-    private By OrderButtonHeader = AllLocators.ORDER_BUTTON_HEADER;
-    private By personDetaislPageHeader = AllLocators.ORDER_PAGE_HEADER;
-    private By nameInput = AllLocators.NAME_INPUT;
-    private By clientNameValue = AllLocators.CLIENT_NAME;
-    private By surnameInput = AllLocators.SURNAME_INPUT;
-    private By clientSurnameValue = AllLocators.CLIENT_SURNAME;
-    private By adressInput = AllLocators.ADRESS_INPUT;
-    private By clientAdressValue = AllLocators.CLIENT_ADRESS_VALUE;
-    private By metroSelector = AllLocators.METRO_SELECTOR;
-    private By metroSelectorFilled = AllLocators.METRO_SELECTOR_FILLED;
-    private By metroStationList = AllLocators.METRO_LIST;
-    private By metroStation = AllLocators.STATION_KRASNOSELSKAYA;
-    private By metroStation2 = AllLocators.STATION_LYBIANKA;
-    private By clientMetroValue = AllLocators.METRO_STATION_VALUE;
-    private By phoneInput = AllLocators.PHONE_INPUT;
-    private By clientPhoneValue = AllLocators.CLIENT_PHONE_VALUE;
-    private By nextButton = AllLocators.NEXT_BUTTON;
+    private By personDetaislPageHeader = By.xpath(".//div[@class='Order_Header__BZXOb']");
+    private By clientNameValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Имя']");
+    private By clientSurnameValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Фамилия']");
+    private By clientAdressValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Адрес: куда привезти заказ']");
+    private By metroInput = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Станция метро']");
+    private By metroSelectorFilled = By.xpath("//input[contains(@class, 'select-search__input') and contains(@value, 'Красносельская')]");
+    private By metroStationList = By.xpath(".//div[@class='select-search__select']");
+    private By metroStation = By.xpath(".//div[contains(@class, 'select-search__select')]//*[contains(text(), 'Красносельская') or contains(@value, 'Красносельская') or contains(@data-value, 'Красносельская')]");
+    private By metroStation2 = By.xpath(".//div[contains(@class, 'select-search__select')]//*[contains(text(), 'Лубянка') or contains(@value, 'Лубянка') or contains(@data-value, 'Лубянка')]");
+    private By clientPhoneValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private By nextButton = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Далее']");
 
 
     public PersonDetaislOrderPage(WebDriver driver) {
@@ -48,9 +42,9 @@ public class PersonDetaislOrderPage {
 
     // метод для проверки открытости поля «ИМЯ», удаления текста из неё и ввода нового значения из параметра
     public void emptyNameInput(String inputNameEmpty) {
-        assertTrue(driver.findElement(nameInput).isEnabled());
-        driver.findElement(nameInput).clear();
-        driver.findElement(nameInput).sendKeys(inputNameEmpty);
+        assertTrue(driver.findElement(clientNameValue).isEnabled());
+        driver.findElement(clientNameValue).clear();
+        driver.findElement(clientNameValue).sendKeys(inputNameEmpty);
     }
 
     // метод получения Имя Клиента
@@ -60,9 +54,9 @@ public class PersonDetaislOrderPage {
 
     // метод для проверки открытости поля «Фамилия», удаления текста из неё и ввода нового значения из параметра
     public void emptySurnameInput(String inputSurnameEmpty) {
-        assertTrue(driver.findElement(surnameInput).isEnabled());
-        driver.findElement(surnameInput).clear();
-        driver.findElement(surnameInput).sendKeys(inputSurnameEmpty);
+        assertTrue(driver.findElement(clientSurnameValue).isEnabled());
+        driver.findElement(clientSurnameValue).clear();
+        driver.findElement(clientSurnameValue).sendKeys(inputSurnameEmpty);
     }
 
     public String getPersonSurnameValue() {
@@ -71,9 +65,9 @@ public class PersonDetaislOrderPage {
 
     // метод для проверки открытости поля «Адресс», удаления текста из неё и ввода нового значения из параметра
     public void emptyAdressInput(String inputAdressEmpty) {
-        assertTrue(driver.findElement(adressInput).isEnabled());
-        driver.findElement(adressInput).clear();
-        driver.findElement(adressInput).sendKeys(inputAdressEmpty);
+        assertTrue(driver.findElement(clientAdressValue).isEnabled());
+        driver.findElement(clientAdressValue).clear();
+        driver.findElement(clientAdressValue).sendKeys(inputAdressEmpty);
     }
 
     public String getClientAdressValue() {
@@ -82,7 +76,7 @@ public class PersonDetaislOrderPage {
 
     // метод для нажатия на селектор Стация Метро
     public void clickMetroSelector() {
-        driver.findElement(metroSelector).click();
+        driver.findElement(metroInput).click();
     }
 
     // метод ожидания загрузки списка Стаций Метро
@@ -97,7 +91,7 @@ public class PersonDetaislOrderPage {
     }
 
     public String getMetroStationValue() {
-        return driver.findElement(clientMetroValue).getAttribute("value");
+        return driver.findElement(metroInput).getAttribute("value");
     }
 
     // метод для нажатия на станцию "Лубянка"
@@ -114,9 +108,9 @@ public class PersonDetaislOrderPage {
 
     // метод для проверки открытости поля «Телефон», удаления текста из неё и ввода нового значения из параметра
     public void emptyPhoneInput(String InputPhoniEmpty) {
-        assertTrue(driver.findElement(phoneInput).isEnabled());
-        driver.findElement(phoneInput).clear();
-        driver.findElement(phoneInput).sendKeys(InputPhoniEmpty);
+        assertTrue(driver.findElement(clientPhoneValue).isEnabled());
+        driver.findElement(clientPhoneValue).clear();
+        driver.findElement(clientPhoneValue).sendKeys(InputPhoniEmpty);
     }
 
     public String getPhoneNumberValue() {

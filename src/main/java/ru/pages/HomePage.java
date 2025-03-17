@@ -12,12 +12,11 @@ import org.openqa.selenium.JavascriptExecutor;
 public class HomePage {
 
     private WebDriver driver;
-    private By homeHeader = AllLocators.MAIN_HEADER;
-    private By fqaHeader = AllLocators.SUB_HEADER;
-    private By accordionItemButton = AllLocators.ACCORDION_BUTTON;
-    private By accordionItemText = AllLocators.ACCORDION_PANEL;
-    private By OrderButtonHeader = AllLocators.ORDER_BUTTON_HEADER;
-    private By OrderButtonMiddle = AllLocators.ORDER_BUTTON_MIDDLE;
+    private By homeHeader = By.xpath(".//div[@class='Home_Header__iJKdX']");
+    private By accordionItemButton = By.xpath(".//div[@class='accordion__button']");
+    private By accordionItemText = By.xpath(".//div[@id='accordion__panel-0']");
+    private By OrderButtonHeader = By.xpath(".//div/button[@class='Button_Button__ra12g']");
+    private By OrderButtonMiddle = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
 
 
     public HomePage(WebDriver driver) {

@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import ru.utils.BrowserUtils;
 import ru.utils.WebDriverFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,6 +42,6 @@ public class HomePageLoadTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+        BrowserUtils.closeBrowser(driver);
     }
 }

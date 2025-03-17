@@ -42,7 +42,7 @@ public class AllLocators {
     // Список Станциq метро
     public static final By METRO_LIST = By.xpath(".//div[@class='select-search__select']");
     // Селектор Станция метро заполнен
-    public static final By METRO_SELECTOR_FILLED =By.xpath("//input[contains(@class, 'select-search__input') and contains(@value, 'Красносельская')]");
+    public static final By METRO_SELECTOR_FILLED = By.xpath("//input[contains(@class, 'select-search__input') and contains(@value, 'Красносельская')]");
     // Инпут Телефон страницы оформления заказа
     public static final By PHONE_INPUT = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
     // Телефон Значение

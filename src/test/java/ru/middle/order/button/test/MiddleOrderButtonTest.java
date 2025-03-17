@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import ru.texts.Texts;
+import ru.utils.BrowserUtils;
 import ru.utils.WebDriverFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -353,6 +354,7 @@ public class MiddleOrderButtonTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+        BrowserUtils.closeBrowser(driver);
     }
 }
+

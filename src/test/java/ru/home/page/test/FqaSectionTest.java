@@ -11,6 +11,7 @@ import static org.hamcrest.CoreMatchers.is;
 import org.hamcrest.MatcherAssert;
 import ru.texts.Texts;
 import ru.utils.WebDriverFactory;
+import ru.utils.BrowserUtils;
 
 public class FqaSectionTest {
     private WebDriver driver;
@@ -44,6 +45,6 @@ public class FqaSectionTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+        BrowserUtils.closeBrowser(driver);
     }
 }

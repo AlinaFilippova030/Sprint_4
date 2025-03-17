@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import ru.texts.Texts;
+import ru.utils.BrowserUtils;
 import ru.utils.WebDriverFactory;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -82,7 +83,6 @@ public class HeaderOderButtonTest {
 
 
 
-
         objPersonDetaislOrderPage.isPersonDetaislPageLoaded();
 
 //         Заголовок стр Для кого самокат
@@ -140,9 +140,9 @@ public class HeaderOderButtonTest {
 //        Станция Метро
         objPersonDetaislOrderPage.clickMetroSelector();
         objPersonDetaislOrderPage.MetroListLoad();
-        if (metroStation.equals("Красносельская")) {
+        if (metroStation.equals(Texts.METRO_KRASNOSELSKAYA)) {
             objPersonDetaislOrderPage.clickMetroStation();
-        } else if (metroStation.equals("Лубянка")) {
+        } else if (metroStation.equals(Texts.METRO_LYBIANKA)) {
             objPersonDetaislOrderPage.clickMetroStation2();
         }
 
@@ -189,9 +189,9 @@ public class HeaderOderButtonTest {
 
 //        Когда привезти самокат
         objAboutRentOrderPage.clickRentDateInput();
-        if (pickDate.equals("17.03.2025")) {
+        if (pickDate.equals(Texts.MARCH17)) {
             objAboutRentOrderPage.clickPickDate();
-        } else if (pickDate.equals("18.03.2025")) {
+        } else if (pickDate.equals(Texts.MARCH18)) {
             objAboutRentOrderPage.clickPickDate2();
         }
 
@@ -208,9 +208,9 @@ public class HeaderOderButtonTest {
 
 //        срок аренды
         objAboutRentOrderPage.clickRentTimeInput();
-        if (pickTime.equals("сутки")) {
+        if (pickTime.equals(Texts.ONE_DAY)) {
             objAboutRentOrderPage.clickPickTime();
-        } else if (pickTime.equals("трое суток")) {
+        } else if (pickTime.equals(Texts.THREE_DAYS_GRACE)) {
             objAboutRentOrderPage.clickPickTime2();
         }
 
@@ -228,23 +228,23 @@ public class HeaderOderButtonTest {
 
 //        цвет самоката
         // Выбор чекбокса в зависимости от входного параметра
-        if (colorCheckBox.equals("чёрный жемчуг")) {
+        if (colorCheckBox.equals(Texts.BLACK)) {
             objAboutRentOrderPage.clickBlackColorCheckBox();
-        } else if (colorCheckBox.equals("серая безысходность")) {
+        } else if (colorCheckBox.equals(Texts.GREY)) {
             objAboutRentOrderPage.clickGreyColorCheckBox();
         }
 
         // Проверка состояния чекбоксов
         if (objAboutRentOrderPage.isBlackColorCheckBoxSelected()) {
-            System.out.println("Чекбокс 'чёрный жемчуг' выбран.");
+            System.out.println("Чекбокс " + Texts.BLACK + " выбран.");
         } else {
-            System.out.println("Чекбокс 'чёрный жемчуг' не выбран.");
+            System.out.println("Чекбокс " + Texts.BLACK + " не выбран.");
         }
 
         if (objAboutRentOrderPage.isGreyColorCheckBoxSelected()) {
-            System.out.println("Чекбокс 'серая безысходность' выбран.");
+            System.out.println("Чекбокс " + Texts.GREY + " выбран.");
         } else {
-            System.out.println("Чекбокс 'серая безысходность' не выбран.");
+            System.out.println("Чекбокс " + Texts.GREY + " не выбран.");
         }
 
         // Получение фактического текста цвета
@@ -287,7 +287,6 @@ public class HeaderOderButtonTest {
         } else {
             System.out.println("FAILED: Заголовок Подтвержления  некорректен. Ожидалось: " + Texts.PLACE_ORDER_TEXT + ", но найдено: " + actualConfirmHeaderText);
         }
-
 
 
 //         Кнопка ДА
@@ -345,6 +344,6 @@ public class HeaderOderButtonTest {
 
     @After
     public void tearDown() {
-        driver.quit();
+        BrowserUtils.closeBrowser(driver);
     }
 }
