@@ -10,13 +10,10 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import ru.utils.BrowserUtils;
 import ru.utils.WebDriverFactory;
-
 import static org.hamcrest.CoreMatchers.is;
-
 
 public class HomePageLoadTest {
     private WebDriver driver;
-
 
     @Before
     public void setUp() {
@@ -37,7 +34,6 @@ public class HomePageLoadTest {
         } else {
             System.out.println("FAILED: Текст заголовка некорректен. Ожидалось: " + Texts.MAIN_PAGE_HEADER_TEXT + ", но найдено: " + actualHeaderText);
         }
-
     }
 
     @After

@@ -1,6 +1,5 @@
 package ru.pages;
 
-import ru.locators.AllLocators;
 import ru.texts.Texts;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,11 +11,11 @@ import org.openqa.selenium.JavascriptExecutor;
 public class HomePage {
 
     private WebDriver driver;
-    private By homeHeader = By.xpath(".//div[@class='Home_Header__iJKdX']");
-    private By accordionItemButton = By.xpath(".//div[@class='accordion__button']");
-    private By accordionItemText = By.xpath(".//div[@id='accordion__panel-0']");
-    private By OrderButtonHeader = By.xpath(".//div/button[@class='Button_Button__ra12g']");
-    private By OrderButtonMiddle = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
+    private  By homeHeader = By.xpath(".//div[@class='Home_Header__iJKdX']");
+    private  By accordionItemButton = By.xpath(".//div[@class='accordion__button']");
+    private  By accordionItemText = By.xpath(" .//div[@class='accordion__panel']");
+    private  By OrderButtonHeader = By.xpath(".//div/button[@class='Button_Button__ra12g']");
+    private  By OrderButtonMiddle = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
 
 
     public HomePage(WebDriver driver) {
@@ -35,7 +34,6 @@ public class HomePage {
         return driver.findElement(homeHeader).getText().replace("\n", " ").trim();
     }
 
-
     public void scrollToSubHeader() {
         WebElement element = driver.findElement(accordionItemButton);
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
@@ -46,13 +44,16 @@ public class HomePage {
         ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 
-
-    public void clickAccordionItemButton() {
-        driver.findElement(accordionItemButton).click();
+    public void clickAccordionItemButton (int index) {
+        driver.findElements(accordionItemButton).get(index).click();
     }
 
-    public String textInAccardeon() {
-        return driver.findElement(accordionItemText).getText();
+    public String getAccordionButtonText (int index) {
+        return driver.findElements(accordionItemButton).get(index).getText();
+    }
+
+    public String textInAccordion (int index) {
+        return driver.findElements(accordionItemText).get(index).getText();
     }
 
     public void clickOrderButtonHeader() {
@@ -62,5 +63,4 @@ public class HomePage {
     public void clickOrderButtonMiddle() {
         driver.findElement(OrderButtonMiddle).click();
     }
-
 }

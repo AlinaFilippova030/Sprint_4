@@ -1,14 +1,12 @@
 package ru.pages;
 
-import ru.locators.AllLocators;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.texts.Texts;
-
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class AboutRentOrderPage {
     private WebDriver driver;
@@ -16,15 +14,14 @@ public class AboutRentOrderPage {
     private By aboutRentPageHeader = By.xpath(".//div[@class='Order_Content__bmtHS']/div[@class='Order_Header__BZXOb' and text()='Про аренду']");
     private By rentDateValue = By.xpath(".//div[@class='Order_Form__17u6u']//input[@placeholder='* Когда привезти самокат']");
     private By rentTimeInput = By.xpath(".//div[@class='Dropdown-placeholder' and text()='* Срок аренды']");
-    private By pickDateMarch17 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '20') and contains(@aria-label, 'марта 2025')]");
-    private By pickDateMarch18 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '21') and contains(@aria-label, 'марта 2025')]");
+    private By pickDateMarch20 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '20') and contains(@aria-label, 'марта 2025')]");
+    private By pickDateMarch21 = By.xpath(".//div[contains(@class, 'react-datepicker__day') and contains(text(), '21') and contains(@aria-label, 'марта 2025')]");
     private By pickTimeOneDay = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'сутки')]");
     private By pickTimeThreeDays = By.xpath(".//div[contains(@class, 'Dropdown-option') and contains(text(), 'трое суток')]");
     private By PickTimeValue = By.xpath(".//div[contains(@class, 'Dropdown-placeholder') and contains(@class, 'is-selected')]");
 
     private By blackColorCheckBox = By.xpath(".//input[@id='black']");
     private By greyColorCheckBox = By.xpath(".//input[@id='grey']");
-    private By colorValue = By.xpath(".//label[@for='black' or @for='grey']");
     private By blackCheckBoxText = By.xpath(".//label[@for='black']");
     private By greyCheckBoxText = By.xpath(".//label[@for='grey']");
 
@@ -36,70 +33,112 @@ public class AboutRentOrderPage {
 
     private By orderPlacedHeaderText = By.xpath(".//div[contains(@class, 'Order_ModalHeader__3FDaJ') and contains(text(), 'Заказ оформлен')]");
     private By checkStatusButton = By.xpath(".//div[@class='Order_NextButton__1_rCA']/button[text()='Посмотреть статус']");
-    private By cancelOrderButton = By.xpath(".//button[contains(@class, 'Button_Button__ra12g') and contains(@class, 'Button_Middle__1CSJM') and contains(@class, 'Button_Inverted__3IF-i') and text()='Отменить заказ']");
-
-
-
 
     public AboutRentOrderPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    // метод для проверки открытия стр Про Аренду
-    public boolean isAboutRentOrderPageLoad() {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(aboutRentPageHeader));
-        String actualAboutRentPageHeaderText = driver.findElement(aboutRentPageHeader).getText();
-        return actualAboutRentPageHeaderText.equals(Texts.ABOUT_RENT_PAGE_HEADER_TEXT);
+    public void fillRentDetails(String pickDate, String pickTime, String colorCheckBox, String commentInput) {
+        try {
+            // Проверка, что страница "Про аренду" загружена
+            WebDriverWait wait = new WebDriverWait(driver, 3);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(aboutRentPageHeader));
+            String actualHeaderText = driver.findElement(aboutRentPageHeader).getText();
+            assertThat("Заголовок страницы 'Про аренду' корректен.", actualHeaderText, is(Texts.ABOUT_RENT_PAGE_HEADER_TEXT));
+            System.out.println("PASSED: Страница 'Про аренду' загружена. Заголовок: " + actualHeaderText);
+
+            // Выбор даты аренды
+            driver.findElement(rentDateValue).click();
+            if (pickDate.equals(Texts.MARCH20)) {
+                driver.findElement(pickDateMarch20).click();
+            } else if (pickDate.equals(Texts.MARCH21)) {
+                driver.findElement(pickDateMarch21).click();
+            }
+
+            // Проверка выбранной даты
+            String actualRentDateValue = driver.findElement(rentDateValue).getAttribute("value");
+            assertThat("Дата аренды корректна.", actualRentDateValue, is(pickDate));
+            System.out.println("PASSED: Дата аренды корректна: " + actualRentDateValue);
+
+            // Выбор срока аренды
+            driver.findElement(rentTimeInput).click();
+            if (pickTime.equals(Texts.ONE_DAY)) {
+                driver.findElement(pickTimeOneDay).click();
+            } else if (pickTime.equals(Texts.THREE_DAYS_GRACE)) {
+                driver.findElement(pickTimeThreeDays).click();
+            }
+
+            // Проверка выбранного срока аренды
+            String actualPickTimeText = driver.findElement(PickTimeValue).getText();
+            assertThat("Срок аренды корректен.", actualPickTimeText, is(pickTime));
+            System.out.println("PASSED: Срок аренды корректен: " + actualPickTimeText);
+
+            // Выбор цвета самоката
+            if (colorCheckBox.equals(Texts.BLACK)) {
+                driver.findElement(blackColorCheckBox).click();
+            } else if (colorCheckBox.equals(Texts.GREY)) {
+                driver.findElement(greyColorCheckBox).click();
+            }
+
+            // Проверка выбранного цвета
+            String actualColorText = getColorValue();
+            assertThat("Цвет самоката корректен.", actualColorText, is(colorCheckBox));
+            System.out.println("PASSED: Цвет самоката корректен: " + actualColorText);
+
+            // Ввод комментария
+            driver.findElement(commentValue).clear();
+            driver.findElement(commentValue).sendKeys(commentInput);
+
+            // Проверка введенного комментария
+            String actualCommentValue = driver.findElement(commentValue).getAttribute("value");
+            assertThat("Комментарий корректен.", actualCommentValue, is(commentInput));
+            System.out.println("PASSED: Комментарий корректен: " + actualCommentValue);
+
+            // Нажатие кнопки "Заказать"
+            driver.findElement(orderButton).click();
+
+            // Проверка заголовка подтверждения заказа
+            wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmationHeader));
+            String actualConfirmHeaderText = driver.findElement(orderConfirmationHeader).getText().replace("\n", " ").trim();
+            assertThat("Заголовок подтверждения заказа корректен.", actualConfirmHeaderText, is(Texts.PLACE_ORDER_TEXT));
+            System.out.println("PASSED: Заголовок подтверждения заказа корректен: " + actualConfirmHeaderText);
+
+            // Нажатие кнопки "Да"
+            driver.findElement(confirmOrderButton).click();
+            // Проверка появления заголовка "Заказ оформлен" после нажатия кнопки "Да"
+            try {
+                // Проверка заголовка "Заказ оформлен"
+                wait.until(ExpectedConditions.visibilityOfElementLocated(orderPlacedHeaderText));
+                String actualConfirmationMessageHeaderText = driver.findElement(orderPlacedHeaderText).getText().split("Номер заказа")[0].replace("\n", " ").trim();
+                assertThat("Заголовок 'Заказ оформлен' корректен.", actualConfirmationMessageHeaderText, is(Texts.ORDER_PLACED_TEXT));
+                System.out.println("PASSED: Кнопка Да нажата, отображается заголовок: " + actualConfirmationMessageHeaderText);
+            } catch (org.openqa.selenium.TimeoutException | org.openqa.selenium.NoSuchElementException e) {
+                System.out.println("FAILED: кнопка ДА нажата, заголовок \"" + Texts.ORDER_PLACED_TEXT + "\" не появился");
+                throw e;
+            } catch (AssertionError e) {
+                System.out.println("FAILED: Заголовок 'Заказ оформлен' некорректен. Ожидалось: " + Texts.ORDER_PLACED_TEXT + ", но найдено: " + e.getMessage());
+                throw e;
+            }
+
+            // Проверка заголовка "Заказ оформлен"
+            wait.until(ExpectedConditions.visibilityOfElementLocated(orderPlacedHeaderText));
+            String actualConfirmationMessageHeaderText = driver.findElement(orderPlacedHeaderText).getText().replace("\n", " ").trim();
+
+// Используем регулярное выражение для извлечения только части текста до "Номер заказа"
+            String extractedText = actualConfirmationMessageHeaderText.replaceAll(" Номер заказа.*", "").trim();
+            assertThat("Заголовок корректен.", extractedText, is(Texts.ORDER_PLACED_TEXT));
+            System.out.println("PASSED: Заголовок корректен: " + extractedText);
+
+            // Нажатие кнопки "Посмотреть статус"
+            driver.findElement(checkStatusButton).click();
+        } catch (AssertionError e) {
+            System.out.println("FAILED: Ошибка при заполнении данных аренды: " + e.getMessage());
+            throw e; // Повторно выбрасываем исключение, чтобы тест завершился с ошибкой
+        }
     }
 
-    // Метод для получения текста заголовка
-    public String getHeaderText() {
-        return driver.findElement(aboutRentPageHeader).getText();
-    }
 
-    // метод для нажатия на поле Дата
-    public void clickRentDateInput() {
-        driver.findElement(rentDateValue).click();
-    }
-
-    // метод для нажатия на дату1 заказа
-    public void clickPickDate() {
-        driver.findElement(pickDateMarch17).click();
-    }
-
-    // метод для нажатия на дату2 заказа
-    public void clickPickDate2() {
-        driver.findElement(pickDateMarch18).click();
-    }
-
-    // Метод получения даты аренды Значение
-    public String getRentDateValue() {
-        return driver.findElement(rentDateValue).getAttribute("value");
-    }
-
-    // метод для нажатия на поле срок аренды
-    public void clickRentTimeInput() {
-        driver.findElement(rentTimeInput).click();
-    }
-
-    // метод для нажатия на поле срок в выпадающем списке
-    public void clickPickTime() {
-        driver.findElement(pickTimeOneDay).click();
-    }
-
-    // метод получения срок аренды Значения
-    public String getPickTimeText() {
-        return driver.findElement(PickTimeValue).getText();
-    }
-
-    // метод для нажатия на поле срок в выпадающем списке2
-    public void clickPickTime2() {
-        driver.findElement(pickTimeThreeDays).click();
-    }
-
-
-    // метод получения цвета самоката Значения
+    // Метод для получения цвета самоката
     public String getColorValue() {
         if (isBlackColorCheckBoxSelected()) {
             return driver.findElement(blackCheckBoxText).getText();
@@ -107,16 +146,6 @@ public class AboutRentOrderPage {
             return driver.findElement(greyCheckBoxText).getText();
         }
         return "Ни один чекбокс не выбран";
-    }
-
-    // Метод для нажатия на чекбокс "Черный жемчуг"
-    public void clickBlackColorCheckBox() {
-        driver.findElement(blackColorCheckBox).click();
-    }
-
-    // Метод для нажатия на чекбокс "серая безысходность"
-    public void clickGreyColorCheckBox() {
-        driver.findElement(greyColorCheckBox).click();
     }
 
     // Метод для проверки, выбран ли чекбокс "чёрный жемчуг"
@@ -128,61 +157,5 @@ public class AboutRentOrderPage {
     public boolean isGreyColorCheckBoxSelected() {
         return driver.findElement(greyColorCheckBox).isSelected();
     }
-
-
-    // метод для проверки открытости поля «Комментарий для курьера», удаления текста из неё и ввода нового значения из параметра
-    public void emptyCommentInput(String inputCommentEmpty) {
-        assertTrue(driver.findElement(commentValue).isEnabled());
-        driver.findElement(commentValue).clear();
-        driver.findElement(commentValue).sendKeys(inputCommentEmpty);
-    }
-
-    // Метод получения Комментария Значение
-    public String getCommentValue() {
-        return driver.findElement(commentValue).getAttribute("value");
-    }
-
-
-    // метод нажатия кнопки заказать
-    public void clickOrderButton() {
-        driver.findElement(orderButton).click();
-    }
-
-    // метод для проверки открытия стр подтверждения заказа
-    public boolean isOrderConfirmationHeader() {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(orderConfirmationHeader));
-        String actualOrderConfirmationHeaderText = driver.findElement(orderConfirmationHeader).getText();
-        return actualOrderConfirmationHeaderText.equals(Texts.PLACE_ORDER_TEXT);
-    }
-
-    // Метод получения текста Хедера Хотите оформить заказ?
-    public String getOrderConfirmationHeader() {
-        return driver.findElement(orderConfirmationHeader).getText().replace("\n", " ").trim();
-    }
-
-    // метод нажатия кнопки ДА
-    public  void clickConfirmOrderButton() {
-        driver.findElement(confirmOrderButton).click();
-    }
-
-
-    //       Метод для получения текста заголовка "Заказ оформлен"
-    public String getOrderPlacedHeaderText() {
-        WebElement element = driver.findElement(orderPlacedHeaderText);
-        String fullText = element.getText();
-        String firstLine = fullText.split("\n")[0];
-        return firstLine.trim();
-    }
-
-
-    public void clickCheckStatusButton() {
-        driver.findElement(checkStatusButton).click();
-    }
-
-    public String getCancelOrderButtonText() {
-        return driver.findElement(cancelOrderButton).getText();
-    }
-
 
 }
